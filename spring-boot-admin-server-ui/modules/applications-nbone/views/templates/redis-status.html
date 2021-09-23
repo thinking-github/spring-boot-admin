@@ -1,0 +1,13 @@
+<dl class="health-status">
+    <dt>{{name}} <span class="status-{{redis.status}} pull-right" ng-bind="redis.status"></span></dt>
+    <dd> 
+        <table style="width:100%;">
+            <tr ng-repeat="(key, value) in redis" ng-if="$ctrl.isHealthDetail(key, value)" ng-class="{'error': key == 'error'}">
+                <td style="text-transform: capitalize;" ng-bind="key"></td><td>{{value | joinArray:', '}}</td> 
+            </tr> 
+        </table> 
+    </dd> 
+    <dd ng-repeat="(name, redis) in redis" ng-if="$ctrl.isChildHealth(name, redis)" >
+        <ng-include src="'applications-nbone/views/templates/redis-status.html'"></ng-include>
+    </dd>
+</dl>

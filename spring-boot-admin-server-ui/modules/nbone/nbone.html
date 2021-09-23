@@ -1,0 +1,32 @@
+<div class="container" ui-view>
+    <h3>nbone Spring Boot Admin</h3>
+    <p>
+        This is an administration GUI for Spring-Boot applications.
+    </p>
+
+    <a href="https://github.com/codecentric/spring-boot-admin" target="_blank">Sources on GitHub</a>
+
+  <!--  fa fa-paper-plane-->
+
+    <form class="form-inline" >
+        <input placeholder="多个节点用逗号分割" id="nodes" name="nodes" required style="width: 700px" type="search" ng-model="cluster.nodes"/>
+        <input placeholder="service path" id="path" name="path"  style="width: 160px" type="search" ng-model="cluster.path"/>
+
+        <button title="refresh" class="btn" type="submit" ng-click="getClusterStatus()">
+            <i class="fa fa-paper-plane-o"></i>
+        </button>
+
+    </form>
+    <pre>{{ cluster }}</pre>
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+        <sba-info-panel ng-class="clusterStatus.length > 1 ? 'span6':'span12'" style="margin-left:0px"
+                        panel-title="nodes_{{ $index }}" ng-repeat="item in clusterStatus">
+
+            <sba-nbone-status  model="clusterStatus" node-status="$parent.item" node-index="$index"></sba-nbone-status>
+
+        </sba-info-panel>
+    </div>
+</div>
+<script type="text/javascript">
+</script>

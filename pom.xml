@@ -54,11 +54,11 @@
         <module>spring-boot-admin-server-ui-login</module>
         <module>spring-boot-admin-client</module>
         <module>spring-boot-admin-dependencies</module>
-        <module>spring-boot-admin-docs</module>
+       <!-- <module>spring-boot-admin-docs</module>-->
         <module>spring-boot-admin-build</module>
         <module>spring-boot-admin-starter-server</module>
         <module>spring-boot-admin-starter-client</module>
-        <module>spring-boot-admin-samples</module>
+        <!--<module>spring-boot-admin-samples</module>-->
     </modules>
     <organization>
         <name>codecentric AG</name>
@@ -382,7 +382,7 @@
         </profile>
     </profiles>
     <distributionManagement>
-        <snapshotRepository>
+ <!--       <snapshotRepository>
             <id>sonatype-nexus-snapshots</id>
             <name>Sonatype Nexus Snapshots</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
@@ -391,6 +391,18 @@
             <id>sonatype-nexus-staging</id>
             <name>Nexus Release Repository</name>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
+        </repository>-->
+            <repository>
+                <id>releases</id>
+                <name>Releases</name>
+                <url>${maven.releases.url}</url>
+            </repository>
+            <snapshotRepository>
+                <id>snapshots</id>
+                <name>Snapshots</name>
+                <url>${maven.snapshots.url}</url>
+                <layout>default</layout>
+            </snapshotRepository>
+
     </distributionManagement>
 </project>

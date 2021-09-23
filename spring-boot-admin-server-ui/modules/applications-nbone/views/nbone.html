@@ -1,0 +1,35 @@
+<div class="container" ui-view>
+    <div class="alert alert-error" ng-if="error">
+        <b>Error:</b> {{ error }}
+    </div>
+    <form class="form-inline">
+        <input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
+        <button title="refresh" class="btn" ng-click="refresh()"><i class="fa fa-repeat"></i></button>
+
+        <div class="input-prepend input-append">
+            <button title="auto refresh" class="btn" ng-click="toggleAutoRefresh()"
+                    ng-class="{'active':refresher != null}">
+                <i class="fa fa-refresh" ng-class="{'fa-spin':refresher != null}"></i>
+            </button>
+            <input class="input-mini" type="number" min="1" ng-model="refreshInterval" ng-disabled="refresher != null"/>
+            <span class="add-on">sec</span>
+        </div>
+    </form>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+        <sba-info-panel class="span12" style="margin-left:0px" panel-title="Application"
+                        raw="api/applications/{{ application.id }}/info" >
+            <table class="table">
+                <tr ng-repeat="(key, value) in info">
+                    <td ng-bind="key"></td>
+                    <td style="white-space: pre; padding: 8px 0 8px 8px; max-width: 400px; overflow-x: auto;"
+                        ng-bind-html="value | yaml | linkify:50"></td>
+                </tr>
+            </table>
+        </sba-info-panel>
+        <sba-info-panel class="span12" style="margin-left:0px" panel-title="Redis"
+                        raw="api/applications/{{ application.id }}/redis">
+            <sba-redis-status redis="redis"></sba-redis-status>
+        </sba-info-panel>
+
+    </div>
+</div>

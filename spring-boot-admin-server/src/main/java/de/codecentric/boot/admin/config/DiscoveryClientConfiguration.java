@@ -22,6 +22,7 @@ import de.codecentric.boot.admin.discovery.ServiceInstanceConverter;
 import de.codecentric.boot.admin.registry.ApplicationRegistry;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -33,6 +34,7 @@ import org.springframework.cloud.client.discovery.simple.SimpleDiscoveryClientAu
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.netflix.discovery.EurekaClient;
+import org.springframework.util.StringUtils;
 
 @Configuration
 @ConditionalOnSingleCandidate(DiscoveryClient.class)
@@ -46,12 +48,19 @@ public class DiscoveryClientConfiguration {
     @Autowired
     private ApplicationRegistry registry;
 
+    @Value("${spring.boot.admin.application.include:}")
+    private String includeServices;
+
     @Bean
     @ConditionalOnMissingBean
     @ConfigurationProperties(prefix = "spring.boot.admin.discovery")
     public ApplicationDiscoveryListener applicationDiscoveryListener(ServiceInstanceConverter serviceInstanceConverter) {
         ApplicationDiscoveryListener listener = new ApplicationDiscoveryListener(discoveryClient, registry);
         listener.setConverter(serviceInstanceConverter);
+
+        if(StringUtils.hasLength(includeServices)){
+            listener.setServices(StringUtils.commaDelimitedListToSet(includeServices));
+        }
         return listener;
     }
 

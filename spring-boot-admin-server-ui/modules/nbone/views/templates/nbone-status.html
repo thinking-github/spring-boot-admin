@@ -1,0 +1,13 @@
+<dl class="health-status">
+    <dt>{{name}} <span class="status-{{nodeStatus.status}} pull-right" ng-bind="nodeStatus.status"></span></dt>
+    <dd> 
+        <table style="width:100%;">
+            <tr ng-repeat="(key, value) in nodeStatus" ng-if="$ctrl.isHealthDetail(key, value)" ng-class="{'error': key == 'error'}">
+                <td style="text-transform: capitalize;" ng-bind="key"></td><td>{{value | joinArray:', '}}</td> 
+            </tr> 
+        </table> 
+    </dd> 
+    <dd ng-repeat="(name, nodeStatus) in nodeStatus" ng-if="$ctrl.isChildHealth(name, nodeStatus)" >
+        <ng-include src="'nbone/views/templates/nbone-status.html'"></ng-include>
+    </dd>
+</dl>
